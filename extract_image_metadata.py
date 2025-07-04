@@ -20,6 +20,8 @@ def extract_datetime_and_temp(image_path):
         from PIL.ExifTags import TAGS
 
         meta = {TAGS.get(k, k): v for k, v in exif.items()}
+        print(meta)
+        exit()
         # DateTimeOriginal
         date_time = meta.get("DateTimeOriginal")
         # Print MakerNote type and length if present
