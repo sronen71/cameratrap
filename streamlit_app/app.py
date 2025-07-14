@@ -7,7 +7,7 @@ st.set_page_config(layout="wide")
 
 def visualize_merged_csv(csv_path):
     script_dir = os.path.dirname(__file__)  # this is streamlit_app/
-    """Visualize merged wildlife camera trap data from a CSV file using Streamlit."""
+    # Visualize merged wildlife camera trap data from a CSV file using Streamlit.
     merged_df = pd.read_csv(csv_path)
     # Center the title using markdown and HTML
     st.markdown(
