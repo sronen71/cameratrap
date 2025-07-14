@@ -6,6 +6,7 @@ st.set_page_config(layout="wide")
 
 
 def visualize_merged_csv(csv_path):
+    script_dir = os.path.dirname(__file__)  # this is streamlit_app/
     """Visualize merged wildlife camera trap data from a CSV file using Streamlit."""
     merged_df = pd.read_csv(csv_path)
     # Center the title using markdown and HTML
@@ -23,13 +24,7 @@ def visualize_merged_csv(csv_path):
                 break
             row = rows[idx]
             with col:
-                img_path = row["sample_image"]
-                # Fix: resolve relative paths based on project root if path starts with Frames/
-                if img_path and img_path.startswith("Frames/"):
-                    project_root = os.path.abspath(
-                        os.path.join(os.path.dirname(__file__), "..")
-                    )
-                    img_path = os.path.join(project_root, img_path)
+                img_path = os.path.join(script_dir, row["sample_image"])
                 if img_path and os.path.exists(img_path):
                     st.image(img_path, use_container_width=True)
                 else:
