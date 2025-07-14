@@ -1,0 +1,24 @@
+{
+  "folder": "Frames/202506/Wetlands Mule Deer 1",
+  "image_frames": [
+    "frame_0001.jpg",
+    "frame_0004.jpg",
+    "frame_0008.jpg",
+    "frame_0012.jpg"
+  ],
+  "analysis": {
+    "date": "unknown",
+    "time": "unknown",
+    "habitat": "unknown",
+    "temperature": "unknown",
+    "weather": "unknown",
+    "count": 0,
+    "individuals": [],
+    "summary": "[DRY RUN] No analysis performed"
+  },
+  "metadata": {
+    "total_images_in_folder": 15,
+    "sampled_images": 4,
+    "dry_run": true
+  }
+}

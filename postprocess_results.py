@@ -1,11 +1,21 @@
 import os
 import subprocess
+import argparse
 
 # Parameters
 results_dir = "results"
 preview_dir = "preview"
 preview_batch_dir = "preview_batch"
 images_dir = "/home/sronen/code/wildaware/cameratrap"
+
+# Argument parser
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--include_all",
+    action="store_true",
+    help="include human and blank",
+)
+args = parser.parse_args()
 
 # List all results files in results_dir
 results_files = [f for f in os.listdir(results_dir) if f.endswith("smoothed.json")]
@@ -29,7 +39,7 @@ for results_file in results_files:
         "--html_output_file",
         html_output_file,
     ]
-    #print(f'Running: {" ".join(cmd_vis)}')
+    # print(f'Running: {" ".join(cmd_vis)}')
     subprocess.run(cmd_vis, check=True)
     # Create a unique preview_batch subdirectory for each results file
     preview_batch_subdir = os.path.join(
@@ -37,7 +47,7 @@ for results_file in results_files:
     )
     os.makedirs(preview_batch_subdir, exist_ok=True)
     # Batch postprocess command
-    print(results_path,preview_batch_subdir)
+    print(results_path, preview_batch_subdir)
     cmd_batch = [
         "python",
         "-m",
@@ -48,7 +58,9 @@ for results_file in results_files:
         "-1",
         "--image_base_dir",
         images_dir,
-        "--separate_animals_by_classification"
+        "--separate_animals_by_classification",
     ]
+    if args.include_all:
+        cmd_batch.append("--include_all")
     print(f'Running: {" ".join(cmd_batch)}')
     subprocess.run(cmd_batch, check=True)

@@ -17,7 +17,8 @@ def contains_images(path):
         if os.path.isfile(os.path.join(path, f))
     )
 
-def main(base_dir):
+
+def main(base_dir, group_by_folder=False, time_gap_minutes=None):
     # If base_dir contains images, run on base_dir itself
 
     os.makedirs("results", exist_ok=True)
@@ -51,25 +52,45 @@ def main(base_dir):
         print(f'Running: {" ".join(cmd)}')
         subprocess.run(cmd, check=True)
 
-        cmd=[
-                "python",
-                "-m",
-                "speciesnet.scripts.sequence_smoothing",
-                "--predictions_json",
-                output_json,
+        cmd = [
+            "python",
+            "-m",
+            "speciesnet.scripts.sequence_smoothing",
+            "--predictions_json",
+            output_json,
         ]
+        if group_by_folder:
+            cmd += ["--group_by_folder"]
+        if time_gap_minutes is not None:
+            cmd += ["--time_gap_minutes", str(time_gap_minutes)]
         print(f'Running: {" ".join(cmd)}')
         subprocess.run(cmd, check=True)
 
 
 if __name__ == "__main__":
-    default_base_dir="cameradata/DCIM"
-    #default_base_dir="cameradata/DCIM/100MEDIA"
-    #default_base_dir="cameradata/example"
-    
+    default_base_dir = "cameradata/DCIM"
+    # default_base_dir="cameradata/DCIM/100MEDIA"
+    # default_base_dir="cameradata/example"
 
-    parser = argparse.ArgumentParser(description="Run SpeciesNet on a directory of images.")
-    parser.add_argument("--base_dir", type=str, default=default_base_dir,
-                        help="The base directory containing image folders.")
+    parser = argparse.ArgumentParser(
+        description="Run SpeciesNet on a directory of images."
+    )
+    parser.add_argument(
+        "--base_dir",
+        type=str,
+        default=default_base_dir,
+        help="The base directory containing image folders.",
+    )
+    parser.add_argument(
+        "--group_by_folder",
+        action="store_true",
+        help="Group sequences by folder in sequence_smoothing.",
+    )
+    parser.add_argument(
+        "--time_gap_minutes",
+        type=int,
+        default=None,
+        help="Time gap (in minutes) for sequence_smoothing.",
+    )
     args = parser.parse_args()
-    main(args.base_dir)
+    main(args.base_dir, args.group_by_folder, args.time_gap_minutes)
