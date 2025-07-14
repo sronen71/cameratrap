@@ -24,6 +24,12 @@ def visualize_merged_csv(csv_path):
             row = rows[idx]
             with col:
                 img_path = row["sample_image"]
+                # Fix: resolve relative paths based on project root if path starts with Frames/
+                if img_path and img_path.startswith("Frames/"):
+                    project_root = os.path.abspath(
+                        os.path.join(os.path.dirname(__file__), "..")
+                    )
+                    img_path = os.path.join(project_root, img_path)
                 if img_path and os.path.exists(img_path):
                     st.image(img_path, use_container_width=True)
                 else:
