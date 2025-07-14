@@ -62,13 +62,16 @@ def visualize_merged_csv(csv_path):
 if __name__ == "__main__":
     import argparse
 
+    # Set the default path relative to this script's location
+    default_path = os.path.join(os.path.dirname(__file__), "updated_merged_202506.csv")
+
     parser = argparse.ArgumentParser(
         description="Visualize merged wildlife camera trap data CSV with Streamlit."
     )
     parser.add_argument(
         "csv_file",
         nargs="?",
-        default="updated_merged_202506.csv",
+        default=default_path,
         help="Path to merged CSV file (default: updated_merged_202506.csv)",
     )
     args = parser.parse_args()
