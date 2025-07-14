@@ -1,5 +1,7 @@
 */
 !streamlit_app/
+!streamlit_app/images/
+!streamlit_app/images/**
 !*.py
 !*.md
 !*.gitignore

@@ -41,7 +41,8 @@ def visualize_merged_csv(csv_path):
                     unsafe_allow_html=True,
                 )
                 st.markdown(
-                    f"<b>SpeciesNet:</b> {row['species']} <b>({row['max_count']})</b> &nbsp; | &nbsp; <b>GPT:</b> {row['gpt_species']} <b>({row['gpt_count']})</b>",
+                    f"<b>SpeciesNet:</b> {row['species']} <b>({row['max_count']})</b> &nbsp; | &nbsp; <b>GPT:</b>"
+                    f"{row['gpt_species']} <b>({row['gpt_count']})</b>",
                     unsafe_allow_html=True,
                 )
                 st.markdown(
@@ -64,6 +65,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Visualize merged wildlife camera trap data CSV with Streamlit."
     )
-    parser.add_argument("csv_file", help="Path to merged CSV file")
+    parser.add_argument(
+        "csv_file",
+        nargs="?",
+        default="updated_merged_202506.csv",
+        help="Path to merged CSV file (default: updated_merged_202506.csv)",
+    )
     args = parser.parse_args()
     visualize_merged_csv(args.csv_file)
